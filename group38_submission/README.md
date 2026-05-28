@@ -9,8 +9,9 @@
 - Driver: psycopg2-binary
 
 ## Archivos
-- `indexes.sql`: 4 indices sobre tablas base.
+- `indexes.sql`: 3 indices sobre tablas base.
 - `matview.sql`: 1 vista materializada combinada (`mv_workload_cache`) y 1 indice sobre ella.
+- Total de indices creados: 4.
 - `workload_after.sql`: copia de `workload.sql` con 15 reescrituras que consumen la vista materializada.
 - `times_baseline.csv`: corrida caliente del workload original.
 - `times_after.csv`: corrida caliente del workload optimizado.
@@ -33,6 +34,6 @@ python run_workload.py --db bookstore_g38 --workload workload_after.sql --csv ti
 
 ## Resultado medido localmente
 - Baseline caliente inicial: 13416 ms.
-- After caliente con la estrategia final: 61 ms.
-- Speedup aproximado final: 219.93x.
+- After caliente con la estrategia final: 117 ms.
+- Speedup aproximado final: 114.67x.
 - Las 15 reescrituras fueron validadas con `EXCEPT` en ambos sentidos contra las consultas originales.
