@@ -1,0 +1,18 @@
+# Large provided datasets; keep local, do not push to GitHub without Git LFS.
+data/*.csv
+
+# Generated/intermediate experiment files
+__pycache__/
+*.pyc
+Tarea2.txt
+*_candidate.sql
+validate_combined.sql
+times_*candidate*.csv
+times_after_*.csv
+matview_*candidate.sql
+indexes_candidate.sql
+
+# Local database/test artifacts
+*.log
+.DS_Store
+Thumbs.db
