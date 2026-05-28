@@ -16,3 +16,4 @@ indexes_candidate.sql
 *.log
 .DS_Store
 Thumbs.db
+times_*warmup*.csv
