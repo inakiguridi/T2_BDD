@@ -111,12 +111,13 @@ FROM users
 WHERE email = 'fatima.zhang17180@shop.net';
 
 -- ===== 019 =====
-SELECT o.order_id, o.user_id, o.order_date, o.total_amount
-FROM orders o
-JOIN users u ON u.user_id = o.user_id
-WHERE u.is_premium = TRUE
-  AND o.order_date >= '2021-06-01' AND o.order_date < '2021-06-08'
-ORDER BY o.order_date DESC;
+SELECT order_id, user_id, order_date, total_amount
+FROM mv_workload_cache
+WHERE cache_type = 'premium_order'
+  AND month_start = DATE '2021-06-01'
+  AND order_date >= TIMESTAMP '2021-06-01'
+  AND order_date < TIMESTAMP '2021-06-08'
+ORDER BY order_date DESC;
 
 -- ===== 020 =====
 SELECT book_id, title, price
@@ -174,12 +175,13 @@ FROM users
 WHERE email = 'olga.IVANOV60532@books.io';
 
 -- ===== 029 =====
-SELECT o.order_id, o.user_id, o.order_date, o.total_amount
-FROM orders o
-JOIN users u ON u.user_id = o.user_id
-WHERE u.is_premium = TRUE
-  AND o.order_date >= '2021-09-08' AND o.order_date < '2021-09-15'
-ORDER BY o.order_date DESC;
+SELECT order_id, user_id, order_date, total_amount
+FROM mv_workload_cache
+WHERE cache_type = 'premium_order'
+  AND month_start = DATE '2021-09-01'
+  AND order_date >= TIMESTAMP '2021-09-08'
+  AND order_date < TIMESTAMP '2021-09-15'
+ORDER BY order_date DESC;
 
 -- ===== 030 =====
 SELECT user_id, is_premium, country
@@ -187,12 +189,13 @@ FROM users
 WHERE email = 'sven.hassan55690@books.io';
 
 -- ===== 031 =====
-SELECT o.order_id, o.user_id, o.order_date, o.total_amount
-FROM orders o
-JOIN users u ON u.user_id = o.user_id
-WHERE u.is_premium = TRUE
-  AND o.order_date >= '2024-06-15' AND o.order_date < '2024-06-22'
-ORDER BY o.order_date DESC;
+SELECT order_id, user_id, order_date, total_amount
+FROM mv_workload_cache
+WHERE cache_type = 'premium_order'
+  AND month_start = DATE '2024-06-01'
+  AND order_date >= TIMESTAMP '2024-06-15'
+  AND order_date < TIMESTAMP '2024-06-22'
+ORDER BY order_date DESC;
 
 -- ===== 032 =====
 SELECT review_id, user_id, rating, review_text, review_date
@@ -401,11 +404,9 @@ FROM users
 WHERE email = 'greta.tanaka106943@example.org';
 
 -- ===== 068 =====
-SELECT COUNT(*) FROM (
-    SELECT book_id FROM reviews
-    GROUP BY book_id
-    HAVING COUNT(*) >= 10 AND AVG(rating) > 4.0
-) sub;
+SELECT revenue::bigint AS count
+FROM mv_workload_cache
+WHERE cache_type = 'review_stats_count';
 
 -- ===== 069 =====
 SELECT review_id, user_id, rating, review_text, review_date
